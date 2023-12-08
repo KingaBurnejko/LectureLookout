@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LectureLookout</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" charset="utf-8"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+
+<body onload="getBuildingName()">
+
+    <section id="main">
+        <form class="form-inline" method="POST" action="{{ url_for('overview') }}">
+
+            <h1><u>LectureLookout</u></h1>
+            <h3>Choose a room for building</h3>
+            <h3 id="selectedBuildingText"></h3>
+
+            <select id="select_room" name="comp_select">
+
+                {% for item in room_list %}
+                    <option value= '{{ item.id }}'>{{ item.number }}</option>
+                {% endfor %}
+
+            </select>
+
+            <br />
+            <br />
+            <br />
+            <button id="button_room" class="submit" value="Submit">Submit</button>
+
+        </form>
+    </section>
+
+    <script src="{{url_for('static', filename='script_building.js')}}"></script>
+
+</body>
+
+</html>
