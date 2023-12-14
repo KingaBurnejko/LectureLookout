@@ -44,7 +44,6 @@ app = Flask(__name__,
 @app.route('/')
 def index():
     buildings_list = get_buildings()
-    display(buildings_list)
     return render_template('index.html', buildings_list=buildings_list)
 
 
@@ -53,7 +52,7 @@ building_id = ""
 @app.route('/building', methods=['GET', 'POST'])
 def building():
     building_id = request.form.get('comp_select')
-    # print(building_id)
+    display(building_id)
     rooms_list = get_building_rooms(building_id)
     return render_template('building.html', room_list=rooms_list)
 
