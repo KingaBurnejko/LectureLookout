@@ -47,7 +47,7 @@ filtered_timetable = []
 
 def set_filtered_timetable(timetable):
 
-    global filtered_timetable
+    global filtered_timetable, current_display, current_subject_index
     filtered_timetable = timetable
     current_display = 0  # Reset display to start from the first item
     current_subject_index = 0  # Reset index to start from the first item
@@ -63,7 +63,7 @@ def display_timetable():
         date = filtered_timetable[current_subject_index]['start_time'][:10]
         lcd.clear()
         time.sleep(0.1)
-        lcd.message = "Chosen date:\n{}".format(date).encode('ascii', 'ignore')
+        lcd.message = "Chosen date:\n{}".format(date)
 
     elif current_display == 1:
         # Display start and end time
@@ -72,7 +72,7 @@ def display_timetable():
         lcd.clear()
         time.sleep(0.2)
         lcd.home()
-        lcd.message = "{}\n{}".format(start_time, end_time).encode('ascii', 'ignore')
+        lcd.message = "{}\n{}".format(start_time, end_time)
         print(start_time, end_time)
 
     elif current_display == 2:
@@ -83,7 +83,7 @@ def display_timetable():
         lcd.home()
         lcd.message = course_name[:16]
         if len(course_name) > 16:
-            lcd.message = "\n{}".format(course_name[16:32]).encode('ascii', 'ignore')
+            lcd.message = "\n{}".format(course_name[16:32])
         print(course_name)
 
     elif current_display == 3:
@@ -92,7 +92,7 @@ def display_timetable():
         lcd.clear()
         time.sleep(0.2)
         lcd.home()
-        lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name']).encode('ascii', 'ignore')
+        lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name'])
         print(lecturer['first_name'], lecturer['last_name'])
 
 def update_display(action):
@@ -125,11 +125,9 @@ def update_display(action):
 
 
 def on_back_button_pressed(channel):
-    time.sleep(0.5)
     update_display("back")
 
 def on_next_button_pressed(channel):
-    time.sleep(0.5)
     update_display("next")
 
 def cleanup_gpio():
