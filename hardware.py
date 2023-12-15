@@ -71,17 +71,21 @@ def display_timetable():
 
     elif current_display == 1:
         time.sleep(2)
+        lcd.clear()
         lcd.message = "{}\n{}".format(start_time, end_time)
 
     elif current_display == 2:
         time.sleep(2)
+        lcd.clear()
         lcd.message = course_name[:16]
         if len(course_name) > 16:
             time.sleep(1)
+            lcd.clear()
             lcd.message = "\n{}".format(course_name[16:32])
 
     elif current_display == 3:
         time.sleep(2)
+        lcd.clear()
         lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name'])
 
 
@@ -110,6 +114,7 @@ def update_display(action):
 
     if len(filtered_timetable) > 0:  # Check if the list is not empty
         display_timetable()
+        time.sleep(5)
     else:
         lcd.message = "No data available"
 
