@@ -76,9 +76,10 @@ def display_timetable():
         time.sleep(2)
         lcd.clear()
         course_name = subject['course_name']['en']
-        if len(course_name) <= 16:
+        print(len(course_name))
+        if len(course_name) < 17:
             lcd.message = course_name
-        elif len(course_name) <= 32:
+        elif len(course_name) < 33:
             lcd.message = "{}\n{}".format(course_name[:16], course_name[16:])
         else:
             lcd.message = course_name
