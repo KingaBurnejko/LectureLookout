@@ -59,19 +59,18 @@ def set_filtered_timetable(timetable):
 def display_timetable():
     global current_display, current_subject_index, filtered_timetable
 
-    if not filtered_timetable or current_subject_index >= len(filtered_timetable):
-        return  # Exit the function if there's no data to display
-
     subject = filtered_timetable[current_subject_index]
 
     lcd.clear()
     if current_display == 0:
         lcd.message = "Chosen date:\n{}".format(subject['start_time'][:10])
+        print(subject['start_time'][:10])
 
     elif current_display == 1:
         time.sleep(2)
         lcd.clear()
         lcd.message = "{}\n{}".format(subject['start_time'][11:16], subject['end_time'][11:16])
+        print(subject['start_time'][11:16], subject['end_time'][11:16])
 
     elif current_display == 2:
         time.sleep(2)
@@ -80,12 +79,14 @@ def display_timetable():
         lcd.message = course_name[:16]
         if len(course_name) > 16:
             lcd.message += "\n{}".format(course_name[16:32])
+        print(course_name)
 
     elif current_display == 3:
         time.sleep(2)
         lcd.clear()
         lecturer = subject['lecturer']
         lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name'])
+        print(lecturer['first_name'], lecturer['last_name'])
 
 def update_display(action):
     global current_display, current_subject_index, filtered_timetable
@@ -110,11 +111,12 @@ def update_display(action):
                 current_subject_index += 1
                 current_display = 0
 
-    # if len(filtered_timetable) > 0:  # Check if the list is not empty
-    #     display_timetable()
-    #     time.sleep(5)
-    # else:
-    #     lcd.message = "No data available"
+    if len(filtered_timetable) > 0:  # Check if the list is not empty
+        display_timetable()
+        time.sleep(5)
+    else:
+        # lcd.message = "No data available"
+        print("No data available")
 
 
 
