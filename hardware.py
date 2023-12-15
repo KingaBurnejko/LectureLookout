@@ -70,7 +70,8 @@ def display_timetable():
         start_time = filtered_timetable[current_subject_index]['start_time'][11:16]
         end_time = filtered_timetable[current_subject_index]['end_time'][11:16]
         lcd.clear()
-        time.sleep(0.1)
+        time.sleep(0.2)
+        lcd.home()
         lcd.message = "{}\n{}".format(start_time, end_time)
         print(start_time, end_time)
 
@@ -78,7 +79,8 @@ def display_timetable():
         # Display course name (PL)
         course_name = filtered_timetable[current_subject_index]['course_name']['en']
         lcd.clear()
-        time.sleep(0.1)
+        time.sleep(0.2)
+        lcd.home()
         lcd.message = course_name[:16]
         if len(course_name) > 16:
             lcd.message = "\n{}".format(course_name[16:32])
@@ -88,7 +90,8 @@ def display_timetable():
         # Display lecturer name
         lecturer = filtered_timetable[current_subject_index]['lecturer']
         lcd.clear()
-        time.sleep(0.1)
+        time.sleep(0.2)
+        lcd.home()
         lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name'])
         print(lecturer['first_name'], lecturer['last_name'])
 
