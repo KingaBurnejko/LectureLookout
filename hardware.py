@@ -47,7 +47,7 @@ def display_chosen_date(date):
     lcd.clear()
     lcd.message = "Chosen date:\n{}".format(date)
 
-filtered_timetable = []
+# filtered_timetable = []
 
 def set_filtered_timetable(timetable):
 
@@ -83,9 +83,9 @@ def display_timetable():
         else:
             lcd.message = course_name
             time.sleep(2)
-            for i in range(len(course_name)):
+            for i in range(len(course_name)*2):
                 lcd.move_left()
-                time.sleep(0.5)
+                time.sleep(0.8)
         print(course_name)
 
     elif current_display == 3:

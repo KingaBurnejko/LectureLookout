@@ -21,8 +21,8 @@ document.getElementById('button_room').addEventListener('click', function () {
   localStorage.setItem('selectedRoomValue', selectedValue);
   localStorage.setItem('selectedRoomText', selectedText);
 
-  console.log('Selected room: ' + selectedValue);
-  console.log('Selected text: ' + selectedText);
+  // console.log('Selected room: ' + selectedValue);
+  // console.log('Selected text: ' + selectedText);
 
   // Redirect to the other page
   // location.href = "overview.html";
