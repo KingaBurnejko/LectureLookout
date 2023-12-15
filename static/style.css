@@ -67,6 +67,7 @@ input[type="date"], select {
 
 
 .loading-container {
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -74,7 +75,7 @@ input[type="date"], select {
     text-align: center;
 }
 .lds-roller {
-    display: none;
+    display: inline-block;
     position: relative;
     width: 80px;
     height: 80px;

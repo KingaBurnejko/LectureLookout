@@ -1,6 +1,6 @@
 document.getElementById('button_building').addEventListener('click', function () {
 
-  document.querySelector('.lds-roller').style.display = 'inline-block';
+  document.querySelector('.loading-container').style.display = 'block';
 
   // Get the select element
   let selectElement = document.getElementById('select_building');
