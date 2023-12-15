@@ -76,7 +76,7 @@ def display_timetable():
         print(start_time, end_time)
 
     elif current_display == 2:
-        # Display course name (PL)
+        # Display course name (EN)
         course_name = filtered_timetable[current_subject_index]['course_name']['en']
         lcd.clear()
         time.sleep(0.2)
@@ -125,9 +125,11 @@ def update_display(action):
 
 
 def on_back_button_pressed(channel):
+    time.sleep(0.5)
     update_display("back")
 
 def on_next_button_pressed(channel):
+    time.sleep(0.5)
     update_display("next")
 
 def cleanup_gpio():
