@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from usosapi import USOSAPIConnection
-from hardware import display
+from hardware import *
 # Load .env file
 load_dotenv()
 
@@ -52,7 +52,7 @@ building_id = ""
 @app.route('/building', methods=['GET', 'POST'])
 def building():
     building_id = request.form.get('comp_select')
-    display(building_id)
+    display_chosen_building(building_id)
     rooms_list = get_building_rooms(building_id)
     return render_template('building.html', room_list=rooms_list)
 
