@@ -82,22 +82,30 @@ def update_display(action):
     global current_display, current_subject_index, filtered_timetable
 
     if action == "back":
-        current_display -= 1
-        if current_display < 0:
-            current_subject_index -= 1
-            if current_subject_index < 0:
-                current_subject_index = len(filtered_timetable) - 1
+        if current_display == 0 and current_subject_index == 0:
+            current_subject_index = len(filtered_timetable) - 1
             current_display = 3
+        else:
+            current_display -= 1
+            if current_display < 0:
+                current_subject_index -= 1
+                current_display = 3
 
     elif action == "next":
-        current_display += 1
-        if current_display > 3:
-            current_subject_index += 1
-            if current_subject_index >= len(filtered_timetable):
-                current_subject_index = 0
+        if current_display == 3 and current_subject_index == len(filtered_timetable) - 1:
+            current_subject_index = 0
             current_display = 0
+        else:
+            current_display += 1
+            if current_display > 3:
+                current_subject_index += 1
+                current_display = 0
 
-    display_timetable()
+    if len(filtered_timetable) > 0:  # Check if the list is not empty
+        display_timetable()
+    else:
+        lcd.message = "No data available"
+
 
 def on_back_button_pressed(channel):
     update_display("back")
