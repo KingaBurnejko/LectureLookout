@@ -82,7 +82,8 @@ def overview_timetable():
     # Now, call the display_timetable function with the filtered timetable
     # Make sure that this function is defined and accessible here
     if filtered_timetable:
-        display_timetable(filtered_timetable)
+        set_filtered_timetable(filtered_timetable)
+        display_timetable()
 
     return Response(
         response=json.dumps({

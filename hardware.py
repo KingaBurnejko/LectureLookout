@@ -27,7 +27,6 @@ button_next.pull = digitalio.Pull.UP
 # Global variables to keep track of the current display and subject
 current_display = 0
 current_subject_index = 0
-filtered_timetable = []
 
 def display_chosen_building(building_id):
 
@@ -38,6 +37,14 @@ def display_chosen_room(building_id):
 
     lcd.clear()
     lcd.message = "Chosen room:\n{}".format(building_id)
+
+filtered_timetable = []
+
+def set_filtered_timetable(timetable):
+    global filtered_timetable
+    filtered_timetable = timetable
+    current_display = 0  # Reset display to start from the first item
+    current_subject_index = 0  # Reset index to start from the first item
 
 def display_timetable():
     global current_display, current_subject_index, filtered_timetable
@@ -97,16 +104,6 @@ def setup_button_interrupts():
     # Here you would set up your GPIO interrupts
     # This is pseudocode and depends on your specific GPIO library
     # Example:
-    # GPIO.add_event_detect(button_back, GPIO.FALLING, callback=on_back_button_pressed, bouncetime=200)
-    # GPIO.add_event_detect(button_next, GPIO.FALLING, callback=on_next_button_pressed, bouncetime=200)
+    GPIO.add_event_detect(button_back, GPIO.FALLING, callback=on_back_button_pressed, bouncetime=200)
+    GPIO.add_event_detect(button_next, GPIO.FALLING, callback=on_next_button_pressed, bouncetime=200)
     pass
-
-# Call this function from your main.py when starting the app
-def initialize_hardware():
-    lcd.clear()
-    lcd.message = "~LectureLookout~\nHello!"
-    setup_button_interrupts()
-
-def set_filtered_timetable(timetable):
-    global filtered_timetable
-    filtered_timetable = timetable
