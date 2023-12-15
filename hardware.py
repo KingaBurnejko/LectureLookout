@@ -122,4 +122,4 @@ def cleanup_gpio():
 def cycle_displays():
     while True:
         update_display("next")
-        time.sleep(1)
+        time.sleep(5)
