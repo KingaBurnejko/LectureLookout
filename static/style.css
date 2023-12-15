@@ -68,11 +68,19 @@ input[type="date"], select {
 
 .loading-container {
     display: none;
-    position: fixed;
-    top: 50%;
+
+    border-radius: 6px;
+    background-color: rgba(240, 240, 240, 0.9);
+    box-shadow: 10px 10px 30px 3px rgb(48, 48, 48);
+    position: absolute;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
+    padding: 10px;
     text-align: center;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-bottom: 20px;
 }
 .lds-roller {
     display: inline-block;
