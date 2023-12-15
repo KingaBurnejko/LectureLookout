@@ -57,15 +57,15 @@ def display_timetable():
 
     lcd.clear()
     if current_display == 0:
-        # Display the date
-        date = filtered_timetable[current_subject_index]['start_time'][:10]
-        lcd.message = "Chosen date:\n{}".format(date)
 
-    elif current_display == 1:
-        # Display start and end time
         start_time = filtered_timetable[current_subject_index]['start_time'][11:16]
         end_time = filtered_timetable[current_subject_index]['end_time'][11:16]
         lcd.message = "{}\n{}".format(start_time, end_time)
+
+    elif current_display == 1:
+        # Display start and end time
+        date = filtered_timetable[current_subject_index]['start_time'][:10]
+        lcd.message = "Chosen date:\n{}".format(date)
 
     elif current_display == 2:
         # Display course name (EN)
