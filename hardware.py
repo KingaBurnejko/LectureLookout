@@ -79,7 +79,7 @@ def display_timetable():
         if len(course_name) <= 16:
             lcd.message = course_name
         elif len(course_name) <= 32:
-            lcd.message = "{}\n{}".format(course_name[:16], course_name[16:32])
+            lcd.message = "{}\n{}".format(course_name[:16], course_name[16:])
         else:
             lcd.message = course_name
             time.sleep(2)
@@ -124,9 +124,6 @@ def update_display(action):
     else:
         # lcd.message = "No data available"
         print("No data available")
-
-
-
 
 def on_back_button_pressed(channel):
     update_display("back")
