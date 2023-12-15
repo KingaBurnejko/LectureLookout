@@ -77,6 +77,8 @@ def overview_timetable():
     data = request.json
     date = data['date']
 
+    display_chosen_date(date)
+
     # Filter the timetable for the specified date
     filtered_timetable = [item for item in timetable if item['start_time'][:10] == date]
 

@@ -43,6 +43,10 @@ def display_chosen_room(building_id):
     lcd.clear()
     lcd.message = "Chosen room:\n{}".format(building_id)
 
+def display_chosen_date(date):
+    lcd.clear()
+    lcd.message = "Chosen date:\n{}".format(date)
+
 filtered_timetable = []
 
 def set_filtered_timetable(timetable):
@@ -66,18 +70,18 @@ def display_timetable():
         lcd.message = "Chosen date:\n{}".format(date)
 
     elif current_display == 1:
-        time.sleep(1)
+        time.sleep(2)
         lcd.message = "{}\n{}".format(start_time, end_time)
 
     elif current_display == 2:
-        time.sleep(1)
+        time.sleep(2)
         lcd.message = course_name[:16]
         if len(course_name) > 16:
             time.sleep(1)
             lcd.message = "\n{}".format(course_name[16:32])
 
     elif current_display == 3:
-        time.sleep(1)
+        time.sleep(2)
         lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name'])
 
 
