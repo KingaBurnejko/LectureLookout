@@ -1,8 +1,8 @@
 import board
 import digitalio
 import adafruit_character_lcd.character_lcd as characterlcd
-import time
 import RPi.GPIO as GPIO
+import time
 
 # LCD setup
 lcd_rs = digitalio.DigitalInOut(board.D26)
@@ -25,15 +25,7 @@ GPIO.setup(button_next_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # Global variables to keep track of the current display and subject
 current_display = 0
 current_subject_index = 0
-
-def setup_button_interrupts():
-    GPIO.add_event_detect(button_back_pin, GPIO.FALLING, callback=on_back_button_pressed, bouncetime=200)
-    GPIO.add_event_detect(button_next_pin, GPIO.FALLING, callback=on_next_button_pressed, bouncetime=200)
-
-def initialize_hardware():
-    lcd.clear()
-    lcd.message = "~LectureLookout~\n Hello!"
-    setup_button_interrupts()
+filtered_timetable = []
 
 def display_chosen_building(building_id):
     lcd.clear()
@@ -43,69 +35,62 @@ def display_chosen_room(building_id):
     lcd.clear()
     lcd.message = "Chosen room:\n{}".format(building_id)
 
-filtered_timetable = []
-
 def set_filtered_timetable(timetable):
-    global filtered_timetable
+    global filtered_timetable, current_subject_index, current_display
     filtered_timetable = timetable
-    current_display = 0  # Reset display to start from the first item
-    current_subject_index = 0  # Reset index to start from the first item
+    current_subject_index = 0
+    current_display = 0
 
 def display_timetable():
     global current_display, current_subject_index, filtered_timetable
 
+    if not filtered_timetable or current_subject_index >= len(filtered_timetable):
+        lcd.message = "No data available"
+        return
+
     lcd.clear()
-    if current_display == 0:
+    if current_subject_index == 0 and current_display == 0:
         # Display the date
         date = filtered_timetable[current_subject_index]['start_time'][:10]
-        lcd.message = "Chosen date:\n{}".format(date)
-
+        lcd.message = "Date: {}\n".format(date)
     elif current_display == 1:
         # Display start and end time
         start_time = filtered_timetable[current_subject_index]['start_time'][11:16]
         end_time = filtered_timetable[current_subject_index]['end_time'][11:16]
-        lcd.message = f"{start_time}\n{end_time}"
-
+        lcd.message = "{} - {}\n".format(start_time, end_time)
     elif current_display == 2:
         # Display course name (PL)
         course_name = filtered_timetable[current_subject_index]['course_name']['pl']
         lcd.message = course_name[:16]
         if len(course_name) > 16:
-            lcd.message += f"\n{course_name[16:32]}"
-
+            lcd.message += "\n{}".format(course_name[16:32])
     elif current_display == 3:
         # Display lecturer name
         lecturer = filtered_timetable[current_subject_index]['lecturer']
-        lcd.message = f"{lecturer['first_name']}\n{lecturer['last_name']}"
+        lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name'])
 
 def update_display(action):
     global current_display, current_subject_index, filtered_timetable
 
     if action == "back":
-        if current_display == 0 and current_subject_index == 0:
-            current_subject_index = len(filtered_timetable) - 1
+        if current_subject_index == 0 and current_display == 0:
+            # At the start, do nothing
+            pass
+        elif current_display == 0:
+            current_subject_index -= 1
             current_display = 3
         else:
             current_display -= 1
-            if current_display < 0:
-                current_subject_index -= 1
-                current_display = 3
 
     elif action == "next":
-        if current_display == 3 and current_subject_index == len(filtered_timetable) - 1:
-            current_subject_index = 0
-            current_display = 0
-        else:
-            current_display += 1
-            if current_display > 3:
+        if current_display == 3:
+            if current_subject_index < len(filtered_timetable) - 1:
                 current_subject_index += 1
                 current_display = 0
+        else:
+            current_display += 1
 
-    if len(filtered_timetable) > 0:  # Check if the list is not empty
-        display_timetable()
-    else:
-        lcd.message = "No data available"
-
+    display_timetable()
 
 def on_back_button_pressed(channel):
     update_display("back")
@@ -113,5 +98,17 @@ def on_back_button_pressed(channel):
 def on_next_button_pressed(channel):
     update_display("next")
 
+def setup_button_interrupts():
+    GPIO.add_event_detect(button_back_pin, GPIO.FALLING, callback=on_back_button_pressed, bouncetime=200)
+    GPIO.add_event_detect(button_next_pin, GPIO.FALLING, callback=on_next_button_pressed, bouncetime=200)
+
+def initialize_hardware():
+    lcd.clear()
+    lcd.message = "~LectureLookout~\nHello!"
+    setup_button_interrupts()
+
 def cleanup_gpio():
     GPIO.cleanup()
+
+# Call this function from your main.py when starting the app
+initialize_hardware()
