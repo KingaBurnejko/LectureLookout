@@ -55,29 +55,31 @@ def set_filtered_timetable(timetable):
 def display_timetable():
     global current_display, current_subject_index, filtered_timetable
 
+    date = filtered_timetable[current_subject_index]['start_time'][:10]
+    start_time = filtered_timetable[current_subject_index]['start_time'][11:16]
+    end_time = filtered_timetable[current_subject_index]['end_time'][11:16]
+    course_name = filtered_timetable[current_subject_index]['course_name']['en']
+    lecturer = filtered_timetable[current_subject_index]['lecturer']
+
     lcd.clear()
     if current_display == 0:
-        # Display the date
-        date = filtered_timetable[current_subject_index]['start_time'][:10]
         lcd.message = "Chosen date:\n{}".format(date)
 
     elif current_display == 1:
-        # Display start and end time
-        start_time = filtered_timetable[current_subject_index]['start_time'][11:16]
-        end_time = filtered_timetable[current_subject_index]['end_time'][11:16]
+        time.sleep(1)
         lcd.message = "{}\n{}".format(start_time, end_time)
 
     elif current_display == 2:
-        # Display course name (EN)
-        course_name = filtered_timetable[current_subject_index]['course_name']['en']
+        time.sleep(1)
         lcd.message = course_name[:16]
         if len(course_name) > 16:
+            time.sleep(1)
             lcd.message = "\n{}".format(course_name[16:32])
 
     elif current_display == 3:
-        # Display lecturer name
-        lecturer = filtered_timetable[current_subject_index]['lecturer']
+        time.sleep(1)
         lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name'])
+
 
 def update_display(action):
     global current_display, current_subject_index, filtered_timetable
@@ -119,7 +121,7 @@ def on_next_button_pressed(channel):
 def cleanup_gpio():
     GPIO.cleanup()
 
-def cycle_displays():
-    while True:
-        update_display("next")
-        time.sleep(5)
+# def cycle_displays():
+#     while True:
+#         update_display("next")
+#         time.sleep(5)

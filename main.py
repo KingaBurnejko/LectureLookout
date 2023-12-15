@@ -84,7 +84,7 @@ def overview_timetable():
     # Make sure that this function is defined and accessible here
     if filtered_timetable:
         set_filtered_timetable(filtered_timetable)
-        display_thread = threading.Thread(target=cycle_displays)
+        display_thread = threading.Thread(target=update_display("next"))
         display_thread.start()
 
     return Response(
