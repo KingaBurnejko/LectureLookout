@@ -68,28 +68,34 @@ def overview():
     timetable = get_room_timetable(room_id)
    
     return render_template('overview.html')
+
 print(timetable)
+
 @app.route('/overview_timetable', methods=['POST'])
 def overview_timetable():
     data = request.json
     date = data['date']
 
-    # print(date)
-    # print(timetable)
+    # Filter the timetable for the specified date
+    filtered_timetable = [item for item in timetable if item['start_time'][:10] == date]
 
-    for item in timetable:
-        if item['start_time'][:10] == date:
-            print(item)
+    # Now, call the display_timetable function with the filtered timetable
+    # Make sure that this function is defined and accessible here
+    if filtered_timetable:
+        display_timetable(filtered_timetable)
 
     return Response(
         response=json.dumps({
             "data": {
-                "import_id": room_id
+                "import_id": room_id,
+                "date": date
             }
         }),
         status=201,
         mimetype="application/json"
     )
+
+
 
 if __name__ == '__main__':
     # print(usosAPi.get_authorization_url())

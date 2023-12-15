@@ -4,8 +4,7 @@ function getBuildingRoomName() {
   let selectedRoom = localStorage.getItem("selectedRoomText");
 
   // Display the selected text
-  document.getElementById("selectedBuildingText").textContent =
-    selectedBuilding;
+  document.getElementById("selectedBuildingText").textContent = selectedBuilding;
   document.getElementById("selectedRoomText").textContent = selectedRoom;
 }
 
