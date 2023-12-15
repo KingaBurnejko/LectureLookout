@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from usosapi import USOSAPIConnection
 from hardware import *
+import threading
 # Load .env file
 load_dotenv()
 
@@ -83,7 +84,8 @@ def overview_timetable():
     # Make sure that this function is defined and accessible here
     if filtered_timetable:
         set_filtered_timetable(filtered_timetable)
-        display_timetable()
+        display_thread = threading.Thread(target=cycle_displays)
+        display_thread.start()
 
     return Response(
         response=json.dumps({
