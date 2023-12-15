@@ -47,12 +47,12 @@ filtered_timetable = []
 
 def set_filtered_timetable(timetable):
 
-    print(current_display, current_subject_index)
-
     global filtered_timetable
     filtered_timetable = timetable
     current_display = 0  # Reset display to start from the first item
     current_subject_index = 0  # Reset index to start from the first item
+
+    print(current_display, current_subject_index)
 
 def display_timetable():
     global current_display, current_subject_index, filtered_timetable
