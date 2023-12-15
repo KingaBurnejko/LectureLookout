@@ -99,7 +99,12 @@ def overview_timetable():
 
 
 if __name__ == '__main__':
+    initialize_hardware()
+    try:
+        app.run(debug=True, port=8080, host='0.0.0.0')
+    finally:
+        cleanup_gpio()  # This ensures GPIO cleanup on exit
     # print(usosAPi.get_authorization_url())
     # pin = input('PIN: ')
     # usosAPi.authorize_with_pin(pin)
-    app.run(debug=True, port=8080, host='0.0.0.0')
+    # app.run(debug=True, port=8080, host='0.0.0.0')
