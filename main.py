@@ -62,6 +62,7 @@ timetable = []
 @app.route('/overview', methods=['GET', 'POST'])
 def overview():
     room_id = request.form.get('comp_select')
+    display_chosen_room(room_id)
     # print(room_id)
     global timetable
     timetable = get_room_timetable(room_id)

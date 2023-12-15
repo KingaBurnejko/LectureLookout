@@ -14,8 +14,15 @@ lcd_rows = 2
 
 lcd = characterlcd.Character_LCD_Mono(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7, lcd_columns, lcd_rows)
 
+lcd.clear()
+lcd.message = "~LectureLookout~\nHello!"
+
 def display_chosen_building(building_id):
 
     lcd.clear()
-    print("Building ID to be displayed:", building_id)
-    lcd.message = building_id
+    lcd.message = "Chosen building:\n{}".format(building_id)
+
+def display_chosen_room(building_id):
+
+    lcd.clear()
+    lcd.message = "Chosen room:\n{}".format(building_id)
