@@ -64,13 +64,13 @@ def display_timetable():
     lcd.clear()
     if current_display == 0:
         lcd.message = "Chosen date:\n{}".format(subject['start_time'][:10])
-        print(subject['start_time'][:10])
+        # print(subject['start_time'][:10])
 
     elif current_display == 1:
         time.sleep(2)
         lcd.clear()
         lcd.message = "{}\n{}".format(subject['start_time'][11:16], subject['end_time'][11:16])
-        print(subject['start_time'][11:16], subject['end_time'][11:16])
+        # print(subject['start_time'][11:16], subject['end_time'][11:16])
 
     elif current_display == 2:
         time.sleep(2)
@@ -83,17 +83,17 @@ def display_timetable():
         else:
             lcd.message = course_name
             time.sleep(2)
-            for i in range(len(course_name)*2):
+            for i in range(len(course_name)):
                 lcd.move_left()
                 time.sleep(0.8)
-        print(course_name)
+        # print(course_name)
 
     elif current_display == 3:
         time.sleep(2)
         lcd.clear()
         lecturer = subject['lecturer']
         lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name'])
-        print(lecturer['first_name'], lecturer['last_name'])
+        # print(lecturer['first_name'], lecturer['last_name'])
 
 def update_display(action):
     global current_display, current_subject_index, filtered_timetable
@@ -121,9 +121,9 @@ def update_display(action):
     if len(filtered_timetable) > 0:  # Check if the list is not empty
         display_timetable()
         time.sleep(5)
-    else:
+    # else:
         # lcd.message = "No data available"
-        print("No data available")
+        # print("No data available")
 
 def on_back_button_pressed(channel):
     update_display("back")
