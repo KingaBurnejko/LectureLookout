@@ -47,7 +47,7 @@ def display_chosen_date(date):
     lcd.clear()
     lcd.message = "Chosen date:\n{}".format(date)
 
-# filtered_timetable = []
+filtered_timetable = []
 
 def set_filtered_timetable(timetable):
 
