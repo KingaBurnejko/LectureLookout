@@ -65,6 +65,14 @@ input[type="date"], select {
     margin: 2px 0px 5px 0px;
 }
 
+
+.loading-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
 .lds-roller {
     display: none;
     position: relative;

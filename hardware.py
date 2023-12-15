@@ -17,4 +17,4 @@ lcd.clear()
 
 def display_chosen_building(buildings_list):
     lcd.clear()
-    lcd.message = buildings_list[0]
+    lcd.message = buildings_list

@@ -94,4 +94,4 @@ if __name__ == '__main__':
     # print(usosAPi.get_authorization_url())
     # pin = input('PIN: ')
     # usosAPi.authorize_with_pin(pin)
-    app.run(debug=True, port=80, host='0.0.0.0')
+    app.run(debug=True, port=8080, host='0.0.0.0')
