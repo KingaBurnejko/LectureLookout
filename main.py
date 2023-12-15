@@ -96,8 +96,6 @@ def overview_timetable():
         mimetype="application/json"
     )
 
-
-
 if __name__ == '__main__':
     initialize_hardware()
     try:

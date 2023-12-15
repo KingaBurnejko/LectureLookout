@@ -46,6 +46,9 @@ def display_chosen_room(building_id):
 filtered_timetable = []
 
 def set_filtered_timetable(timetable):
+
+    print(current_display, current_subject_index)
+
     global filtered_timetable
     filtered_timetable = timetable
     current_display = 0  # Reset display to start from the first item
@@ -66,7 +69,7 @@ def display_timetable():
         start_time = filtered_timetable[current_subject_index]['start_time'][11:16]
         end_time = filtered_timetable[current_subject_index]['end_time'][11:16]
         lcd.clear()
-        lcd.message = f"{start_time}\n{end_time}"
+        lcd.message = "{}\n{}".format(start_time, end_time)
         print(start_time, end_time)
 
     elif current_display == 2:
@@ -75,14 +78,14 @@ def display_timetable():
         lcd.clear()
         lcd.message = course_name[:16]
         if len(course_name) > 16:
-            lcd.message += f"\n{course_name[16:32]}"
+            lcd.message = "\n{}".format(course_name[16:32])
         print(course_name)
 
     elif current_display == 3:
         # Display lecturer name
         lecturer = filtered_timetable[current_subject_index]['lecturer']
         lcd.clear()
-        lcd.message = f"{lecturer['first_name']}\n{lecturer['last_name']}"
+        lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name'])
         print(lecturer['first_name'], lecturer['last_name'])
 
 def update_display(action):
