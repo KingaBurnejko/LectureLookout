@@ -14,7 +14,7 @@ lcd_columns = 16
 lcd_rows = 2
 lcd = characterlcd.Character_LCD_Mono(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7, lcd_columns, lcd_rows)
 lcd.clear()
-lcd.message = "~LectureLookout~\nHello!"
+lcd.message = "~LectureLookout~\n Hello!"
 
 # GPIO setup for buttons
 button_back = digitalio.DigitalInOut(board.D2)  # Change to the correct pin for 'back' button
@@ -27,7 +27,7 @@ button_next.pull = digitalio.Pull.UP
 # Global variables to keep track of the current display and subject
 current_display = 0
 current_subject_index = 0
-
+filtered_timetable = []
 
 def display_chosen_building(building_id):
 
@@ -39,58 +39,74 @@ def display_chosen_room(building_id):
     lcd.clear()
     lcd.message = "Chosen room:\n{}".format(building_id)
 
-def display_timetable(timetable):
-    global current_display, current_subject_index
+def display_timetable():
+    global current_display, current_subject_index, filtered_timetable
 
     lcd.clear()
     if current_display == 0:
         # Display the date
-        date = timetable[current_subject_index]['start_time'][:10]
+        date = filtered_timetable[current_subject_index]['start_time'][:10]
         lcd.message = date
 
     elif current_display == 1:
         # Display start and end time
-        start_time = timetable[current_subject_index]['start_time'][11:16]
-        end_time = timetable[current_subject_index]['end_time'][11:16]
+        start_time = filtered_timetable[current_subject_index]['start_time'][11:16]
+        end_time = filtered_timetable[current_subject_index]['end_time'][11:16]
         lcd.message = f"{start_time}\n{end_time}"
 
     elif current_display == 2:
         # Display course name (PL)
-        course_name = timetable[current_subject_index]['course_name']['pl']
+        course_name = filtered_timetable[current_subject_index]['course_name']['pl']
         lcd.message = course_name[:16]
         if len(course_name) > 16:
             lcd.message += f"\n{course_name[16:32]}"
 
     elif current_display == 3:
         # Display lecturer name
-        lecturer = timetable[current_subject_index]['lecturer']
+        lecturer = filtered_timetable[current_subject_index]['lecturer']
         lcd.message = f"{lecturer['first_name']}\n{lecturer['last_name']}"
 
-# Main loop
-try:
-    while True:
-        if not button_back.value:  # Button for going back pressed
-            current_display -= 1
-            if current_display < 0:
-                current_subject_index -= 1
-                if current_subject_index < 0:
-                    current_subject_index = len(timetable) - 1
-                current_display = 3
-            display_timetable(timetable)
-            time.sleep(0.3)  # Debounce delay
+def update_display(action):
+    global current_display, current_subject_index, filtered_timetable
 
-        if not button_next.value:  # Button for going next pressed
-            current_display += 1
-            if current_display > 3:
-                current_subject_index += 1
-                if current_subject_index >= len(timetable):
-                    current_subject_index = 0
-                current_display = 0
-            display_timetable(timetable)
-            time.sleep(0.3)  # Debounce delay
+    if action == "back":
+        current_display -= 1
+        if current_display < 0:
+            current_subject_index -= 1
+            if current_subject_index < 0:
+                current_subject_index = len(filtered_timetable) - 1
+            current_display = 3
 
-        time.sleep(0.1)
+    elif action == "next":
+        current_display += 1
+        if current_display > 3:
+            current_subject_index += 1
+            if current_subject_index >= len(filtered_timetable):
+                current_subject_index = 0
+            current_display = 0
 
-except KeyboardInterrupt:
-    # Clean up GPIO on CTRL+C exit
+    display_timetable()
+
+def on_back_button_pressed(channel):
+    update_display("back")
+
+def on_next_button_pressed(channel):
+    update_display("next")
+
+def setup_button_interrupts():
+    # Here you would set up your GPIO interrupts
+    # This is pseudocode and depends on your specific GPIO library
+    # Example:
+    # GPIO.add_event_detect(button_back, GPIO.FALLING, callback=on_back_button_pressed, bouncetime=200)
+    # GPIO.add_event_detect(button_next, GPIO.FALLING, callback=on_next_button_pressed, bouncetime=200)
+    pass
+
+# Call this function from your main.py when starting the app
+def initialize_hardware():
     lcd.clear()
+    lcd.message = "~LectureLookout~\nHello!"
+    setup_button_interrupts()
+
+def set_filtered_timetable(timetable):
+    global filtered_timetable
+    filtered_timetable = timetable
