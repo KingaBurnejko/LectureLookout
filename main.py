@@ -54,6 +54,7 @@ building_id = ""
 def building():
     building_id = request.form.get('comp_select')
     display_chosen_building(building_id)
+    global rooms_list
     rooms_list = get_building_rooms(building_id)
     return render_template('building.html', room_list=rooms_list)
 
@@ -63,14 +64,17 @@ timetable = []
 @app.route('/overview', methods=['GET', 'POST'])
 def overview():
     room_id = request.form.get('comp_select')
-    display_chosen_room(room_id)
+
+    selected_room = next((room for room in rooms_list if room['id'] == room_id), None)
+
+    display_chosen_room(selected_room['number'])
     # print(room_id)
     global timetable
     timetable = get_room_timetable(room_id)
    
     return render_template('overview.html')
 
-print(timetable)
+# print(timetable)
 
 @app.route('/overview_timetable', methods=['POST'])
 def overview_timetable():
