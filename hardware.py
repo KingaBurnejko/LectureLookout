@@ -63,7 +63,7 @@ def display_timetable():
         date = filtered_timetable[current_subject_index]['start_time'][:10]
         lcd.clear()
         time.sleep(0.1)
-        lcd.message = "Chosen date:\n{}".format(date)
+        lcd.message = "Chosen date:\n{}".format(date).encode('ascii', 'ignore')
 
     elif current_display == 1:
         # Display start and end time
@@ -72,7 +72,7 @@ def display_timetable():
         lcd.clear()
         time.sleep(0.2)
         lcd.home()
-        lcd.message = "{}\n{}".format(start_time, end_time)
+        lcd.message = "{}\n{}".format(start_time, end_time).encode('ascii', 'ignore')
         print(start_time, end_time)
 
     elif current_display == 2:
@@ -83,7 +83,7 @@ def display_timetable():
         lcd.home()
         lcd.message = course_name[:16]
         if len(course_name) > 16:
-            lcd.message = "\n{}".format(course_name[16:32])
+            lcd.message = "\n{}".format(course_name[16:32]).encode('ascii', 'ignore')
         print(course_name)
 
     elif current_display == 3:
@@ -92,7 +92,7 @@ def display_timetable():
         lcd.clear()
         time.sleep(0.2)
         lcd.home()
-        lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name'])
+        lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name']).encode('ascii', 'ignore')
         print(lecturer['first_name'], lecturer['last_name'])
 
 def update_display(action):
