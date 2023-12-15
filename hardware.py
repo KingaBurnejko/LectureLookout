@@ -57,15 +57,15 @@ def display_timetable():
 
     lcd.clear()
     if current_display == 0:
-
-        start_time = filtered_timetable[current_subject_index]['start_time'][11:16]
-        end_time = filtered_timetable[current_subject_index]['end_time'][11:16]
-        lcd.message = "{}\n{}".format(start_time, end_time)
+        # Display the date
+        date = filtered_timetable[current_subject_index]['start_time'][:10]
+        lcd.message = "Chosen date:\n{}".format(date)
 
     elif current_display == 1:
         # Display start and end time
-        date = filtered_timetable[current_subject_index]['start_time'][:10]
-        lcd.message = "Chosen date:\n{}".format(date)
+        start_time = filtered_timetable[current_subject_index]['start_time'][11:16]
+        end_time = filtered_timetable[current_subject_index]['end_time'][11:16]
+        lcd.message = "{}\n{}".format(start_time, end_time)
 
     elif current_display == 2:
         # Display course name (EN)
@@ -108,6 +108,8 @@ def update_display(action):
         lcd.message = "No data available"
 
 
+
+
 def on_back_button_pressed(channel):
     update_display("back")
 
@@ -116,3 +118,8 @@ def on_next_button_pressed(channel):
 
 def cleanup_gpio():
     GPIO.cleanup()
+
+def cycle_displays():
+    while True:
+        update_display("next")
+        time.sleep(1)
