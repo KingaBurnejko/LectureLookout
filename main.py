@@ -80,6 +80,7 @@ def overview():
 def overview_timetable():
     data = request.json
     date = data['date']
+    display_chosen_date(date)
 
     display_chosen_date(date)
 
