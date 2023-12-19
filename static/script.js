@@ -13,8 +13,8 @@ document.getElementById('button_building').addEventListener('click', function ()
   localStorage.setItem('selectedBuildingValue', selectedValue);
   localStorage.setItem('selectedBuildingText', selectedText);
 
-  console.log('Selected building: ' + selectedValue);
-  console.log('Selected text: ' + selectedText);
+  // console.log('Selected building: ' + selectedValue);
+  // console.log('Selected text: ' + selectedText);
 
   // Redirect to the other page
   // window.location.href = "templates/building.html";

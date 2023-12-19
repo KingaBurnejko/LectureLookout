@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>LectureLookout</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <meta name="viewport" charset="utf-8"
-        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-</head>
+    <head>
+        <title>LectureLookout</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        <meta name="viewport" charset="utf-8"
+            content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    </head>
 
-<body>
+    <body>
 
-    <section id="main">
-        <form class="form-inline" method="POST" action="{{ url_for('building') }}">
+        <section id="main">
+            <form class="form-inline" method="POST" action="{{ url_for('building') }}">
 
-        <h1><u>LectureLookout</u></h1>
-        <h3>Choose a building</h3>
+                <h1><u>LectureLookout</u></h1>
+                <h3>Choose a building</h3>
 
-        <select id="select_building" name="comp_select">
-            {% for item in buildings_list %}
-            <option value= '{{ item.id }}'>{{ item.name.pl }}</option>
-            {% endfor %}
-        </select>
+                <select id="select_building" name="comp_select">
+                    {% for item in buildings_list %}
+                    <option value= '{{ item.id }}'>{{ item.name.pl }}</option>
+                    {% endfor %}
+                </select>
 
-        <br />
-        <br />
-        <br />
-        <button id="button_building" class="submit" value="Submit">Submit</button>
-        </form>
-    </section>
+                <br />
+                <br />
+                <br />
 
-    <div class="loading-container">
-        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-        <p>Loading data. Please wait...</p>
-    </div>
-    <!-- <script src="script.js"></script> -->
-    <script src="{{url_for('static', filename='script.js')}}"></script>
+                <button id="button_building" class="submit" value="Submit">Submit</button>
 
+            </form>
+        </section>
 
-</body>
+        <div class="loading-container">
+            <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            <p>Loading data. Please wait...</p>
+        </div>
+        
+        <script src="{{url_for('static', filename='script.js')}}"></script>
+
+    </body>
 
 </html>

@@ -37,10 +37,14 @@ def display_chosen_room(room_id):
 
 def display_chosen_date(date):
     lcd.clear()
-    lcd.message = "Date:\n{}".format(date)
+    lcd.message = "Chosen date:\n{}".format(date)
+
+filtered_timetable = []
 
 def set_filtered_timetable(timetable):
-    global filtered_timetable, current_subject_index, current_display
+
+    global filtered_timetable, current_display, current_subject_index
+
     filtered_timetable = timetable
     current_subject_index = 0
     current_display = 0
@@ -48,28 +52,45 @@ def set_filtered_timetable(timetable):
 def display_timetable():
     global current_display, current_subject_index, filtered_timetable
 
-    if not filtered_timetable or current_subject_index >= len(filtered_timetable):
-        lcd.clear()
-        lcd.message = "No data available"
-        return
+    subject = filtered_timetable[current_subject_index]
+
 
     lcd.clear()
     subject = filtered_timetable[current_subject_index]
 
     if current_display == 0:
-        # Display the date
-        lcd.message = "Date: {}\n".format(subject['start_time'][:10])
+        lcd.message = "Chosen date:\n{}".format(subject['start_time'][:10])
+        # print(subject['start_time'][:10])
+
     elif current_display == 1:
-        # Display start and end time
-        lcd.message = "{} - {}\n".format(subject['start_time'][11:16], subject['end_time'][11:16])
+        time.sleep(2)
+        lcd.clear()
+        lcd.message = "{}\n{}".format(subject['start_time'][11:16], subject['end_time'][11:16])
+        # print(subject['start_time'][11:16], subject['end_time'][11:16])
+
     elif current_display == 2:
-        # Display course name (PL)
-        course_name = subject['course_name']['pl']
-        lcd.message = "Course:\n{}".format(course_name[:16])
+        time.sleep(2)
+        lcd.clear()
+        course_name = subject['course_name']['en']
+        if len(course_name) <= 16:
+            lcd.message = course_name
+        elif len(course_name) <= 32:
+            lcd.message = "{}\n{}".format(course_name[:16], course_name[16:32])
+        else:
+            lcd.message = course_name
+            time.sleep(2)
+            for i in range(len(course_name)):
+                lcd.move_left()
+                time.sleep(0.8)
+        # print(course_name)
+
     elif current_display == 3:
-        # Display lecturer name
+        time.sleep(2)
+        lcd.clear()
         lecturer = subject['lecturer']
         lcd.message = "{}\n{}".format(lecturer['first_name'], lecturer['last_name'])
+        # print(lecturer['first_name'], lecturer['last_name'])
+
 
 def update_display(action):
     global current_display, current_subject_index, filtered_timetable
@@ -90,7 +111,12 @@ def update_display(action):
                 current_display = 0
             # No action if already at the last subject
 
-    display_timetable()
+    if len(filtered_timetable) > 0:  # Check if the list is not empty
+        display_timetable()
+        time.sleep(5)
+    # else:
+        # lcd.message = "No data available"
+        # print("No data available")
 
 def on_back_button_pressed(channel):
     update_display("back")
@@ -109,3 +135,8 @@ def initialize_hardware():
 
 def cleanup_gpio():
     GPIO.cleanup()
+
+# def cycle_displays():
+#     while True:
+#         update_display("next")
+#         time.sleep(5)
